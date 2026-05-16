@@ -20,21 +20,9 @@ def incluir_titulo():
             print(f"Erro: {e}")
             continue
         
-        # Método novo: criar instância vazia e atribuir diretamente
-        titulo_atual = Titulo()
-        titulo_atual.nossonumero = nossonumero
-        if titulo_atual.erro:
-            print(f"Erro no nosso número: {titulo_atual.erro}")
-            continue
-        
-        titulo_atual.valor = valor
-        if titulo_atual.erro:
-            print(f"Erro no valor: {titulo_atual.erro}")
-            continue
-        
-        titulo_atual.pagadornome = nome
-        if titulo_atual.erro:
-            print(f"Erro no nome: {titulo_atual.erro}")
+        titulo_atual = Titulo(nossonumero=nossonumero, valor=valor, pagadornome=nome)
+        if not titulo_atual.validar():
+            print(f"Erro: {titulo_atual.erro}")
             continue
         
         lista_titulos.append(titulo_atual)
@@ -73,7 +61,7 @@ def alterar_valor():
     try:
         nova_valor = float(input("Informe o novo valor: "))
         titulo_atual.valor = nova_valor
-        if titulo_atual.erro:
+        if not titulo_atual.validar():
             print(f"Erro: {titulo_atual.erro}")
         else:
             print(f"Valor alterado para: {titulo_atual.valor}")
@@ -110,7 +98,7 @@ def alterar_nome():
     
     novo_nome = input("Informe o novo nome: ")
     titulo_atual.pagadornome = novo_nome
-    if titulo_atual.erro:
+    if not titulo_atual.validar():
         print(f"Erro: {titulo_atual.erro}")
     else:
         print(f"Nome alterado para: {titulo_atual.pagadornome}")
@@ -140,11 +128,9 @@ def menu():
         print("\nMenu:")
         print("1. Incluir Título")
         print("2. Retorna Dados da Classe")
-        print("3. Altera Valor do Título")
-        print("4. Altera Nome do Pagador")
-        print("5. Listar Títulos")
-        print("6. Gerar INI")
-        print("7. Finaliza")
+        print("3. Listar Títulos")
+        print("4. Gerar INI")
+        print("5. Finaliza")
         try:
             opcao = int(input("Escolha uma opção: "))
         except ValueError:
@@ -159,19 +145,13 @@ def menu():
                 print("Você escolheu retornar dados.")
                 retorna_dados()
             case 3:
-                print("Você escolheu alterar valor.")
-                alterar_valor()
-            case 4:
-                print("Você escolheu alterar nome.")
-                alterar_nome()
-            case 5:
                 print("Você escolheu listar Títulos.")
                 listar_titulos()
-            case 6:
+            case 4:
                 print("Você escolheu gerar INI.")
                 dados_ini = gerar_ini()
                 print(dados_ini)
-            case 7:
+            case 5:
                 print("Finalizando...")
                 break
             case _:
